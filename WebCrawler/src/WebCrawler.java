@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Vector;
 
 /**
@@ -8,10 +9,11 @@ public class WebCrawler {
         Crawler myCrawler = new Crawler();
         Parser  myParser  = new Parser();
 
-        String html = myCrawler.getHtml("http://www.google.com/imghp?hl=en&tab=wi");
+        String html = myCrawler.grabHtml("http://www.google.com/imghp?hl=en&tab=wi");
         Vector<String> urls = myParser.getHtmlUrls(html);
         for(int i = 0; i < urls.size(); i++) {
-            myCrawler.getHtml(urls.get(i));
+            String crawlerHtml = myCrawler.grabHtml(urls.get(i));
+            myParser.getHtmlUrls(crawlerHtml);
         }
     }
 }
