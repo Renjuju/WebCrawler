@@ -12,6 +12,7 @@ public class WebCrawler {
         String html = myCrawler.grabHtml("http://www.google.com/imghp?hl=en&tab=wi");
         Vector<String> urls = myParser.getHtmlUrls(html);
         for(int i = 0; i < urls.size(); i++) {
+            System.out.println("---------" + i + "----------");
             String crawlerHtml = myCrawler.grabHtml(urls.get(i));
             myParser.getHtmlUrls(crawlerHtml);
         }

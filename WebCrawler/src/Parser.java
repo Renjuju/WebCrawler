@@ -18,7 +18,7 @@ public class Parser {
                 urls.add(matcher.group(1));
             }
         }
-        displayUrls(urls);
+//        displayUrls(urls);
         return urls;
     }
 
