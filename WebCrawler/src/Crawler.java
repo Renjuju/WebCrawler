@@ -18,13 +18,9 @@ public class Crawler {
             Scanner scanner = new Scanner(connection.getInputStream());
             scanner.useDelimiter("\\Z");
             htmlContent = scanner.next();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch(Exception e) {
             e.printStackTrace();
         }
         return htmlContent;
     }
-
-
 }
