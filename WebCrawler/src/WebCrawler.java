@@ -4,6 +4,9 @@
 public class WebCrawler {
     public static void main(String[] args) {
         Crawler myCrawler = new Crawler();
-        System.out.println(myCrawler.getHtml("http://google.com"));
+        Parser  myParser  = new Parser();
+
+//        System.out.println(myCrawler.getHtml("http://white.net/blog/6-steps-finding-website-urls/"));
+        myParser.getHtmlUrls("http://stackoverflow.com/questions/5120171/extract-links-from-a-web-page");
     }
 }

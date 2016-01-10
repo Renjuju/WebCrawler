@@ -8,6 +8,8 @@ import java.util.Scanner;
  * Created by Renju R on 1/9/2016.
  */
 public class Crawler {
+
+//    Help from stackoverflow
     public String getHtml(String url) {
         String htmlContent = null;
         URLConnection connection = null;
@@ -23,4 +25,6 @@ public class Crawler {
         }
         return htmlContent;
     }
+
+
 }
