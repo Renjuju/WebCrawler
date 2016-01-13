@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class Crawler {
 
-
+        private Storage store = new Storage();
 //    http://stackoverflow.com/questions/8616781/how-to-get-a-web-pages-source-code-from-java
     private String grabHtml(String url)  {
         StringBuilder html = null;
@@ -34,15 +34,11 @@ public class Crawler {
         String html = grabHtml(url);
         Parser htmlParser = new Parser();
         Vector<String> urlVector = htmlParser.getHtmlUrls(html);
-        Map.Entry<String,Vector<String>> urlMaps = new AbstractMap.SimpleEntry<>(html, urlVector);
-        Vector<Map.Entry<String, Vector<String>>> vectorMapOfUrls = new Vector<>();
-        vectorMapOfUrls.add(urlMaps);
-
-        for(int x = 0; x < levels; x++) {
-            for(int i = 0; i < urlVector.size(); i++) {
-                System.out.println(urlVector.get(i));
-            }
-        }
+//        Map.Entry<String,Vector<String>> urlMaps = new AbstractMap.SimpleEntry<>(html, urlVector);
+//        Vector<Map.Entry<String, Vector<String>>> vectorMapOfUrls = new Vector<>();
+//        vectorMapOfUrls.add(urlMaps);
+        store.addToUrlStore(urlVector);
+        store.printUrlList();
 
         return "";
     }
