@@ -34,12 +34,21 @@ public class Crawler {
         String html = grabHtml(url);
         Parser htmlParser = new Parser();
         Vector<String> urlVector = htmlParser.getHtmlUrls(html);
-//        Map.Entry<String,Vector<String>> urlMaps = new AbstractMap.SimpleEntry<>(html, urlVector);
-//        Vector<Map.Entry<String, Vector<String>>> vectorMapOfUrls = new Vector<>();
-//        vectorMapOfUrls.add(urlMaps);
+
         store.addToUrlStore(urlVector);
+
+        for(int i = 0; i < levels; i++) {
+                
+        }
+
         store.printUrlList();
 
         return "";
     }
 }
+
+
+//lolwtf
+//        Map.Entry<String,Vector<String>> urlMaps = new AbstractMap.SimpleEntry<>(html, urlVector);
+//        Vector<Map.Entry<String, Vector<String>>> vectorMapOfUrls = new Vector<>();
+//        vectorMapOfUrls.add(urlMaps);
