@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
  */
 public class Parser {
 
+
     public Vector<String> getHtmlUrls(String html) {
         Vector<String> urls = new Vector<>();
 
@@ -20,6 +21,18 @@ public class Parser {
         }
 //        displayUrls(urls);
         return urls;
+    }
+
+//    list of urls
+    public Vector<String> getHtmlUrls(Vector<String> urls) {
+        Vector<String> urlList = new Vector<>();
+
+        for(String s: urls) {
+            Crawler grabber = new Crawler();
+            String html = grabber.grabHtml(s);
+            urlList.addAll(getHtmlUrls(html));
+        }
+        return urlList;
     }
 
     private void displayUrls(Vector<String> urls) {

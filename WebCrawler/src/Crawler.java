@@ -11,7 +11,7 @@ public class Crawler {
 
         private Storage store = new Storage();
 //    http://stackoverflow.com/questions/8616781/how-to-get-a-web-pages-source-code-from-java
-    private String grabHtml(String url)  {
+    public String grabHtml(String url)  {
         StringBuilder html = null;
         try{
             URL urlObj = new URL(url);
@@ -35,20 +35,25 @@ public class Crawler {
         Parser htmlParser = new Parser();
         Vector<String> urlVector = htmlParser.getHtmlUrls(html);
 
-        store.addToUrlStore(urlVector);
-
+        store.addToUrlStoreWithLevels(urlVector);
+        store.addToUrlStoreWithLevels(htmlParser.getHtmlUrls(urlVector));
         for(int i = 0; i < levels; i++) {
-                
+//                what to do
+
         }
 
-        store.printUrlList();
+        store.printUrlListWithLevels();
 
         return "";
     }
 }
 
-
-//lolwtf
 //        Map.Entry<String,Vector<String>> urlMaps = new AbstractMap.SimpleEntry<>(html, urlVector);
 //        Vector<Map.Entry<String, Vector<String>>> vectorMapOfUrls = new Vector<>();
 //        vectorMapOfUrls.add(urlMaps);
+
+//        store.getUrlList();
+//        Parser parser = new Parser();
+//        parser.parseList;
+//        returns newList;
+//        adds to something
