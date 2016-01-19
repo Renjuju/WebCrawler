@@ -25,6 +25,10 @@ public class Crawler {
             input.close();
         } catch(Exception e) {
             e.printStackTrace();
+        } finally {
+            if(html == null) {
+                return null;
+            }
         }
 
         return html.toString();
@@ -35,11 +39,10 @@ public class Crawler {
         Parser htmlParser = new Parser();
         Vector<String> urlVector = htmlParser.getHtmlUrls(html);
 
-        store.addToUrlStoreWithLevels(urlVector);
-        store.addToUrlStoreWithLevels(htmlParser.getHtmlUrls(urlVector));
-        for(int i = 0; i < levels; i++) {
-//                what to do
 
+        for(int i = 0; i < levels; i++) {
+            store.addToUrlStoreWithLevels(urlVector);
+            urlVector = htmlParser.getHtmlUrls(urlVector);
         }
 
         store.printUrlListWithLevels();

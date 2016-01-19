@@ -30,6 +30,9 @@ public class Parser {
         for(String s: urls) {
             Crawler grabber = new Crawler();
             String html = grabber.grabHtml(s);
+            if(html == null) {
+                continue;
+            }
             urlList.addAll(getHtmlUrls(html));
         }
         return urlList;

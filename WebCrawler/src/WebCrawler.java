@@ -8,6 +8,6 @@ public class WebCrawler {
     public static void main(String[] args) {
 
         Crawler webCrawler = new Crawler();
-        String html = webCrawler.crawl(1, "http://www.google.com/imghp?hl=en&tab=wi");
+        String html = webCrawler.crawl(2, "http://www.pages.drexel.edu/~rr553/cs164/index.html");
     }
 }
