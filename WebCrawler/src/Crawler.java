@@ -43,9 +43,10 @@ public class Crawler {
         for(int i = 0; i < levels; i++) {
             store.addToUrlStoreWithLevels(urlVector);
             urlVector = htmlParser.getHtmlUrls(urlVector);
+            store.printUrlList(urlVector);
         }
-
-        store.printUrlListWithLevels();
+//        store.printUrlListWithLevels();
+        System.out.println("Total number of sites visited: " + store.getUrlStoreWithLevels().size() );
 
         return "";
     }

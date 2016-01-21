@@ -28,6 +28,12 @@ public class Storage {
         }
     }
 
+    public void printUrlList(Vector<String> list) {
+        for(int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+    }
+
     public void addToUrlStoreWithLevels(Vector<String> urlList) {
         urlStoreWithLevels.add(urlList);
     }
