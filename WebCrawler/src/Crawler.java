@@ -11,7 +11,7 @@ public class Crawler {
 
         private Storage store = new Storage();
 //    http://stackoverflow.com/questions/8616781/how-to-get-a-web-pages-source-code-from-java
-    public String grabHtml(String url)  {
+    public static String grabHtml(String url)  {
         StringBuilder html = null;
         try{
             URL urlObj = new URL(url);

@@ -13,5 +13,7 @@ public class WebCrawler {
 //        int levels = userInput.getUserLevelChoices();
 //        webCrawler.crawl(levels, url);
         String html = webCrawler.crawl(2, "http://www.pages.drexel.edu/~rr553/cs164/index.html");
+        WebThreads threads = new WebThreads();
+//        threads.start();
     }
 }
