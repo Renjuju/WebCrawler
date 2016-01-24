@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Renju R on 1/9/2016.
@@ -24,7 +25,8 @@ public class Crawler {
             }
             input.close();
         } catch(Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.out.println("Website rejected access..");
         } finally {
             if(html == null) {
                 return null;
@@ -34,19 +36,19 @@ public class Crawler {
         return html.toString();
     }
 
-    public String crawl(int levels, String url) {
+    public synchronized String crawl(int levels, String url) {
         String html = grabHtml(url);
         Parser htmlParser = new Parser();
         Vector<String> urlVector = htmlParser.getHtmlUrls(html);
-
-
-        for(int i = 0; i < levels; i++) {
+        store.addToUrlStoreWithLevels(urlVector);
+        for(int i = 1; i < levels; i++) {
+            urlVector = htmlParser.getHtmlUrls(urlVector, store);
             store.addToUrlStoreWithLevels(urlVector);
-            urlVector = htmlParser.getHtmlUrls(urlVector);
-            store.printUrlList(urlVector);
+//            store.printUrlList(store.getUrlStoreWithLevels(i));
         }
-//        store.printUrlListWithLevels();
-        System.out.println("Total number of sites visited: " + store.getUrlStoreWithLevels().size() );
+        store.printUrlListWithLevels();
+//          store.printUrlList(store.getTempStore());
+        System.out.println("Total number of sites visited: " + store.size() );
 
         return "";
     }

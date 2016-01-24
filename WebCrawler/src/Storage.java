@@ -7,7 +7,7 @@ public class Storage {
 
     private Vector<String> urlStore = new Vector<>();
     private Vector<Vector<String>> urlStoreWithLevels= new Vector<>();
-
+    private Vector<String> tempStore = new Vector<>();
     public void addToUrlStore(String url) {
         urlStore.add(url);
     }
@@ -34,12 +34,36 @@ public class Storage {
         }
     }
 
+    public void tempStore(Vector<String> urls) {
+        if(tempStore.size() > 0) {
+            tempStore.addAll(urls);
+        } else {
+            tempStore = urls;
+        }
+    }
+
+    public Vector<String> getTempStore() {
+        return tempStore;
+    }
+
+    public void deleteTempStore() {
+        tempStore.removeAllElements();
+    }
+
     public void addToUrlStoreWithLevels(Vector<String> urlList) {
         urlStoreWithLevels.add(urlList);
     }
 
     public Vector<Vector<String>> getUrlStoreWithLevels() {
         return urlStoreWithLevels;
+    }
+
+    public int size() {
+        int size = 0;
+        for(int i = 0; i < urlStoreWithLevels.size(); i++) {
+            size+=urlStoreWithLevels.get(i).size();
+        }
+        return size;
     }
 
     public Vector<String> getUrlStoreWithLevels(int index) throws IndexOutOfBoundsException {
@@ -49,11 +73,11 @@ public class Storage {
     public void printUrlListWithLevels() {
         System.out.println("Size of store: " + urlStoreWithLevels.size());
         for(int i = 0; i < urlStoreWithLevels.size(); i++) {
-            System.out.println("Level " + i);
+            System.out.println("Level " + (i+1));
             for(int x = 0; x < urlStoreWithLevels.get(i).size(); x++) {
                 System.out.println(urlStoreWithLevels.get(i).get(x));
             }
-            System.out.println("End Level " + i);
+            System.out.println("End Level " + (i+1));
         }
     }
 }
