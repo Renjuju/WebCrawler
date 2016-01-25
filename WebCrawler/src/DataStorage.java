@@ -3,11 +3,10 @@ import java.util.Vector;
 /**
  * Created by Renju R on 1/9/2016.
  */
-public class Storage {
+public class DataStorage {
 
     private Vector<String> urlStore = new Vector<>();
     private Vector<Vector<String>> urlStoreWithLevels= new Vector<>();
-    private Vector<String> tempStore = new Vector<>();
     public void addToUrlStore(String url) {
         urlStore.add(url);
     }
@@ -32,22 +31,6 @@ public class Storage {
         for(int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i));
         }
-    }
-
-    public void tempStore(Vector<String> urls) {
-        if(tempStore.size() > 0) {
-            tempStore.addAll(urls);
-        } else {
-            tempStore = urls;
-        }
-    }
-
-    public Vector<String> getTempStore() {
-        return tempStore;
-    }
-
-    public void deleteTempStore() {
-        tempStore.removeAllElements();
     }
 
     public void addToUrlStoreWithLevels(Vector<String> urlList) {

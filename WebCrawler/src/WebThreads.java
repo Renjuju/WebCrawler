@@ -1,6 +1,4 @@
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by renju on 1/20/16.
@@ -13,12 +11,9 @@ public class WebThreads implements Runnable{
 
     }
 
-    public WebThreads(String url, Storage store) {
-//        System.out.println("Created a thread");
+    public WebThreads(String url, DataStorage store) {
         Parser htmlParser = new Parser();
-        String html = Crawler.grabHtml(url);
-        Vector<String> urlVector = htmlParser.getHtmlUrls(html);
-        store.tempStore(urlVector);
-//        store.printUrlList(urlVector);
+//        String html = WebCrawler.grabHtml(url);
+//        Vector<String> urlVector = htmlParser.getHtmlUrls(html);
     }
 }

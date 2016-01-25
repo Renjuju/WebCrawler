@@ -1,32 +1,31 @@
-import java.util.concurrent.ExecutionException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.*;
 
 /**
  * Created by Renju R on 1/9/2016.
  */
 public class WebCrawler {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
 
-        Crawler webCrawler = new Crawler();
-        Input userInput = new Input();
-//        String url = userInput.getUserUrl();
-//        int levels = userInput.getUserLevelChoices();
-        long startTime = System.currentTimeMillis();
-        String html = webCrawler.crawl(1, "https://www.google.com/?gws_rd=ssl");
-        long endTime = System.currentTimeMillis() - startTime;
-        double totalTime = (double)endTime/1000;
-        System.out.println("Total time: " + totalTime + " seconds");
-        System.exit(-1);
+    private DataStorage store = new DataStorage();
+    private Parser parser = new Parser();
+
+    public synchronized String crawl(int levels, String url) {
+        String html = parser.grabHtml(url);
+        Parser htmlParser = new Parser();
+        Vector<String> urlVector = htmlParser.getHtmlUrls(html);
+        store.addToUrlStoreWithLevels(urlVector);
+        for(int i = 1; i < levels; i++) {
+            urlVector = htmlParser.getHtmlUrls(urlVector, store);
+            store.addToUrlStoreWithLevels(urlVector);
+//            store.printUrlList(store.getUrlStoreWithLevels(i));
+        }
+        store.printUrlListWithLevels();
+//          store.printUrlList(store.getTempStore());
+        System.out.println("Total number of sites visited: " + store.size() );
+
+        return "";
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,3 +1,8 @@
+import java.beans.Transient;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -10,6 +15,31 @@ import java.util.regex.Pattern;
  */
 public class Parser {
 
+
+    //    http://stackoverflow.com/questions/8616781/how-to-get-a-web-pages-source-code-from-java
+    public static String grabHtml(String url)  {
+        StringBuilder html = null;
+        try{
+            URL urlObj = new URL(url);
+            URLConnection urlConnection = urlObj.openConnection();
+            BufferedReader input = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+            String line;
+            html= new StringBuilder();
+            while((line = input.readLine()) != null) {
+                html.append(line);
+            }
+            input.close();
+        } catch(Exception e) {
+//            e.printStackTrace();
+            System.out.println("Website rejected access..");
+        } finally {
+            if(html == null) {
+                return null;
+            }
+        }
+
+        return html.toString();
+    }
 
     public Vector<String> getHtmlUrls(String html) {
         Vector<String> urls = new Vector<>();
@@ -27,23 +57,23 @@ public class Parser {
     }
 
 //    list of urls
-    public  synchronized Vector<String> getHtmlUrls(Vector<String> urls, final Storage store) {
+    public  synchronized Vector<String> getHtmlUrls(Vector<String> urls, final DataStorage store) {
         Vector<String> urlList = new Vector<>();
         List<Future<Vector<String>>> futures = new ArrayList<>();
         for(final String s: urls) {
-            Crawler grabber = new Crawler();
+//            WebCrawler grabber = new WebCrawler();
 
             ExecutorService es = Executors.newFixedThreadPool(urls.size());
             Future<Vector<String>> threadHtml = es.submit(new Callable<Vector<String>>() {
                 @Override
                 public Vector<String> call() throws Exception {
                     Parser htmlParser = new Parser();
-                    String html = Crawler.grabHtml(s);
+                    String html = grabHtml(s);
                     Vector<String> urlVector = htmlParser.getHtmlUrls(html);
                     return urlVector;
                 }
             });
-            String html = grabber.grabHtml(s);
+            String html = grabHtml(s);
             if(html == null) {
                 continue;
             }
@@ -58,7 +88,6 @@ public class Parser {
         } catch(Exception e) {
 
         }
-//        urlList = store.getTempStore();
         return urlList;
     }
 
