@@ -1,7 +1,3 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.*;
 
 /**
@@ -10,22 +6,21 @@ import java.util.*;
 public class WebCrawler {
 
     private DataStorage store = new DataStorage();
-    private Parser parser = new Parser();
-
     public synchronized String crawl(int levels, String url) {
-        String html = parser.grabHtml(url);
+    	
+    	System.out.println(url);
+        String html = Parser.grabHtml(url);
         Parser htmlParser = new Parser();
-        Vector<String> urlVector = htmlParser.getHtmlUrls(html);
+        Vector<String> urlVector = Parser.getHtmlUrls(html);
         store.addToUrlStoreWithLevels(urlVector);
-        for(int i = 1; i < levels; i++) {
+        
+        for(int i = 0; i < levels; i++) {
             urlVector = htmlParser.getHtmlUrls(urlVector, store);
             store.addToUrlStoreWithLevels(urlVector);
 //            store.printUrlList(store.getUrlStoreWithLevels(i));
         }
         store.printUrlListWithLevels();
-//          store.printUrlList(store.getTempStore());
         System.out.println("Total number of sites visited: " + store.size() );
-
         return "";
     }
 }

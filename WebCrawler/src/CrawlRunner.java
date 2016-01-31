@@ -12,7 +12,7 @@ public class CrawlRunner {
 //        int levels = userInput.getUserLevelChoices();
         long startTime = System.currentTimeMillis();
         System.out.println("Crawling...please be patient");
-        String html = webCrawler.crawl(2, "https://www.google.com/?gws_rd=ssl");
+        String html = webCrawler.crawl(1, "https://google.com");
         long endTime = System.currentTimeMillis() - startTime;
         double totalTime = (double)endTime/1000;
         System.out.println("Total time: " + totalTime + " seconds");

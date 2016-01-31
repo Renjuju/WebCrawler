@@ -3,10 +3,12 @@ import java.util.Vector;
 /**
  * Created by Renju R on 1/9/2016.
  */
-public class DataStorage {
+public class DataStorage implements Storage{
 
     private Vector<String> urlStore = new Vector<>();
     private Vector<Vector<String>> urlStoreWithLevels= new Vector<>();
+    private Vector<String> htmlLinks = new Vector<>();
+    
     public void addToUrlStore(String url) {
         urlStore.add(url);
     }
@@ -43,7 +45,7 @@ public class DataStorage {
 
     public int size() {
         int size = 0;
-        for(int i = 0; i < urlStoreWithLevels.size(); i++) {
+        for(int i = 0; i < urlStoreWithLevels.size()-1; i++) {
             size+=urlStoreWithLevels.get(i).size();
         }
         return size;
@@ -55,9 +57,9 @@ public class DataStorage {
 
     public void printUrlListWithLevels() {
         System.out.println("Size of store: " + urlStoreWithLevels.size());
-        for(int i = 0; i < urlStoreWithLevels.size(); i++) {
+        for(int i = 0; i < urlStoreWithLevels.size() - 1; i++) {
             System.out.println("Level " + (i+1));
-            for(int x = 0; x < urlStoreWithLevels.get(i).size(); x++) {
+            for(int x = 0; x < urlStoreWithLevels.get(i).size() - 1; x++) {
                 System.out.println(urlStoreWithLevels.get(i).get(x));
             }
             System.out.println("End Level " + (i+1));
