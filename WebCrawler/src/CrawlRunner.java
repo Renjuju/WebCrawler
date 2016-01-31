@@ -8,11 +8,11 @@ public class CrawlRunner {
 
         WebCrawler webCrawler = new WebCrawler();
         Input userInput = new Input();
-//        String url = userInput.getUserUrl();
-//        int levels = userInput.getUserLevelChoices();
+        String url = userInput.getUserUrl();
+        int levels = userInput.getUserLevelChoices();
         long startTime = System.currentTimeMillis();
-        System.out.println("Crawling...please be patient");
-        String html = webCrawler.crawl(1, "https://google.com");
+        System.out.println("Crawling...spiderman can only shoot so many threads");
+        String html = webCrawler.crawl(levels, "https://google.com");
         long endTime = System.currentTimeMillis() - startTime;
         double totalTime = (double)endTime/1000;
         System.out.println("Total time: " + totalTime + " seconds");

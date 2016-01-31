@@ -12,7 +12,18 @@ import org.jsoup.select.Elements;
  * Created by Renju R on 1/9/2016.
  */
 public class Parser {
-
+	
+	private Vector<String> urlList = new Vector<>();
+	private Vector<String> htmlList = new Vector<>();
+	
+	public Vector<String> getUrlList() {
+		 return urlList;
+	}
+	
+	public Vector<String> getHtmlList() {
+		return htmlList;
+	}
+	
 	public static String grabHtml(String url) {
 		String html = null;
 		try {
@@ -41,9 +52,8 @@ public class Parser {
 		return urls;
 	}
 	
-    public  synchronized Vector<String> getHtmlUrls(Vector<String> urls, final DataStorage store) {
-        Vector<String> urlList = new Vector<>();
-        Vector<String> htmlList = new Vector<>();
+    public  synchronized void getHtmlUrls(Vector<String> urls, final DataStorage store, final int level) {
+        
         List<Future<Vector<String>>> futures = new ArrayList<>();
         for(final String s: urls) {
             ExecutorService es = Executors.newFixedThreadPool(urls.size());
@@ -54,7 +64,10 @@ public class Parser {
                     if(html == null) {
                     	return null;
                     }
+                    htmlList.add(getHtmlBody(html));
                     Vector<String> urlVector = getHtmlUrls(html);
+                    FileStorage fileStorage = new FileStorage();
+                    fileStorage.createFile(level, html, s.replaceAll("[^a-zA-Z0-9]", "") + ".html");
                     return urlVector;
                 }
             });
@@ -68,6 +81,5 @@ public class Parser {
         } catch(Exception e) {
         	e.printStackTrace();
         }
-        return urlList;
     }
 }

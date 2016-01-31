@@ -15,9 +15,10 @@ public class WebCrawler {
         store.addToUrlStoreWithLevels(urlVector);
         
         for(int i = 0; i < levels; i++) {
-            urlVector = htmlParser.getHtmlUrls(urlVector, store);
+            htmlParser.getHtmlUrls(urlVector, store, i);
+            urlVector = htmlParser.getUrlList();
             store.addToUrlStoreWithLevels(urlVector);
-//            store.printUrlList(store.getUrlStoreWithLevels(i));
+            store.addToHtmlStore(htmlParser.getHtmlList());
         }
         store.printUrlListWithLevels();
         System.out.println("Total number of sites visited: " + store.size() );

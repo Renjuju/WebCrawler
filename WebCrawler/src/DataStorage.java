@@ -7,7 +7,7 @@ public class DataStorage implements Storage{
 
     private Vector<String> urlStore = new Vector<>();
     private Vector<Vector<String>> urlStoreWithLevels= new Vector<>();
-    private Vector<String> htmlLinks = new Vector<>();
+    private Vector<Vector<String>> htmlLinks = new Vector<>();
     
     public void addToUrlStore(String url) {
         urlStore.add(url);
@@ -38,6 +38,18 @@ public class DataStorage implements Storage{
     public void addToUrlStoreWithLevels(Vector<String> urlList) {
         urlStoreWithLevels.add(urlList);
     }
+    
+    public void addToHtmlStore(Vector<String> htmlUrls) {
+    	htmlLinks.add(htmlUrls);
+    }
+    
+    public String getHtmlUrl(int level, int index) {
+    	try {
+    		return htmlLinks.get(level).get(index).trim().substring(0, 10);
+    	} catch(Exception e){
+    	}
+    	return null;
+    }
 
     public Vector<Vector<String>> getUrlStoreWithLevels() {
         return urlStoreWithLevels;
@@ -60,7 +72,7 @@ public class DataStorage implements Storage{
         for(int i = 0; i < urlStoreWithLevels.size() - 1; i++) {
             System.out.println("Level " + (i+1));
             for(int x = 0; x < urlStoreWithLevels.get(i).size() - 1; x++) {
-                System.out.println(urlStoreWithLevels.get(i).get(x));
+                System.out.println(urlStoreWithLevels.get(i).get(x) + " " + getHtmlUrl(i,x));
             }
             System.out.println("End Level " + (i+1));
         }
