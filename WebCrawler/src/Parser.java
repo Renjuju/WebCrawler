@@ -1,8 +1,14 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Vector;
 import java.util.concurrent.*;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,6 +21,7 @@ public class Parser {
 	
 	private Vector<String> urlList = new Vector<>();
 	private Vector<String> htmlList = new Vector<>();
+	private static Vector<String> visitedRobots = new Vector<>();
 	
 	public Vector<String> getUrlList() {
 		 return urlList;
@@ -52,6 +59,48 @@ public class Parser {
 		return urls;
 	}
 	
+
+    private static String getRobotTxt(String url) {
+        String htmlContent = null;
+        URLConnection connection = null;
+        try {
+            connection = new URL(url).openConnection();
+            Scanner scanner = new Scanner(connection.getInputStream());
+            scanner.useDelimiter("\\Z");
+            htmlContent = scanner.next();
+            scanner.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return htmlContent;
+    }
+    
+	public static Vector<String> checkForRobots(String url) throws MalformedURLException, FileNotFoundException {
+		URL urlObj = new URL(url);
+		String baseUrl = "http://" + urlObj.getHost() + "/robots.txt";
+		if(!visitedRobots.contains(baseUrl)) {
+			visitedRobots.add(baseUrl);
+		} else {
+			return null;
+		}
+		String robotsTxt = getRobotTxt(baseUrl);
+		String[] lines = robotsTxt.split("\n");
+		Vector<String> allowed = new Vector<String>();
+		Vector<String> disallowed = new Vector<String>();
+		for(int i = 0; i < lines.length; i++) {
+			if (lines[i].contains("Allow")) {
+				allowed.add("http://" + urlObj.getHost() + lines[i].split(":")[1].trim());
+			} 
+			if(lines[i].contains("Disallow")) {
+				disallowed.add(lines[i]);
+			}
+		}
+		System.out.println("Total size of allowed robots.txt for " + baseUrl + ": " + allowed.size());
+		return allowed;
+	}
+	
     public  synchronized void getHtmlUrls(Vector<String> urls, final DataStorage store, final int level) {
         
         List<Future<Vector<String>>> futures = new ArrayList<>();
@@ -60,14 +109,22 @@ public class Parser {
             Future<Vector<String>> threadHtml = es.submit(new Callable<Vector<String>>() {
                 @Override
                 public Vector<String> call() throws Exception {
-                    String html = grabHtml(s);
-                    if(html == null) {
-                    	return null;
-                    }
+                	Vector<String> urlVector = null;
+                	String html;
+                	Vector<String> visitableLinks = checkForRobots(s);
+                	if(visitableLinks != null) {
+                		urlVector = visitableLinks;
+                		html = grabHtml(s);
+                	} else {
+                		html = grabHtml(s);
+                		if(html == null) {
+                			return null;
+                		}
+                		urlVector = getHtmlUrls(html);
+                	}
                     htmlList.add(getHtmlBody(html));
-                    Vector<String> urlVector = getHtmlUrls(html);
                     FileStorage fileStorage = new FileStorage();
-                    fileStorage.createFile(level, html, s.replaceAll("[^a-zA-Z0-9]", "") + ".html");
+                    fileStorage.createFile(level, html, s.replaceAll("[^a-zA-Z0-9]", "") + ".html");	
                     return urlVector;
                 }
             });

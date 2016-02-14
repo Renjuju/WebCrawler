@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.util.*;
 
 /**
@@ -11,13 +13,25 @@ public class WebCrawler {
     	System.out.println(url);
         String html = Parser.grabHtml(url);
         Parser htmlParser = new Parser();
-        Vector<String> urlVector = Parser.getHtmlUrls(html);
-        store.addToUrlStoreWithLevels(urlVector);
         
+        Vector<String> urlList = new Vector<String>();
+    	try {
+			urlList= Parser.checkForRobots(url);
+			
+			if(urlList.size() > 0) {
+				store.addToUrlStoreWithLevels(urlList);
+			} else {
+				urlList = Parser.getHtmlUrls(html);
+				store.addToUrlStoreWithLevels(urlList);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+    	
         for(int i = 0; i < levels; i++) {
-            htmlParser.getHtmlUrls(urlVector, store, i);
-            urlVector = htmlParser.getUrlList();
-            store.addToUrlStoreWithLevels(urlVector);
+            htmlParser.getHtmlUrls(urlList, store, i);
+            urlList = htmlParser.getUrlList();
+            store.addToUrlStoreWithLevels(urlList);
             store.addToHtmlStore(htmlParser.getHtmlList());
         }
         store.printUrlListWithLevels();

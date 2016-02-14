@@ -20,6 +20,7 @@ public class Input {
             System.out.println("How many levels deep would you like to go?");
             levels = Integer.parseInt(in.nextLine());
         } catch(Exception e) {
+        	System.out.println("Error: " + e.getMessage());
             getUserLevelChoices();
         }
 
