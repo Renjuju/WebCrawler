@@ -37,8 +37,8 @@ public class Parser {
 			Document doc = Jsoup.connect(url).get();
 			html = Jsoup.parseBodyFragment(doc.html()).html();
 		} catch (IOException e) {
-			System.out.println("Unable to access " + url);
-			System.out.println(e.getMessage());
+//			System.out.println("Unable to access " + url);
+//			System.out.println(e.getMessage());
 		}
 		return html;
 	}
@@ -77,6 +77,23 @@ public class Parser {
         return htmlContent;
     }
     
+    public static boolean alreadyVisted(String url) {
+    	URL urlObj;
+		try {
+			urlObj = new URL(url);
+			String baseUrl = "http://" + urlObj.getHost() + "/robots.txt";
+	    	if(!visitedRobots.contains(baseUrl)) {
+	    		visitedRobots.add(baseUrl);
+	    		return false; 
+	    	} else {
+	    		return true;
+	    	}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		return true;
+    }
+    
 	public static Vector<String> checkForRobots(String url) throws MalformedURLException, FileNotFoundException {
 		URL urlObj = new URL(url);
 		String baseUrl = "http://" + urlObj.getHost() + "/robots.txt";
@@ -87,18 +104,19 @@ public class Parser {
 		}
 		String robotsTxt = getRobotTxt(baseUrl);
 		String[] lines = robotsTxt.split("\n");
-		Vector<String> allowed = new Vector<String>();
 		Vector<String> disallowed = new Vector<String>();
+		String userAgent = null;
 		for(int i = 0; i < lines.length; i++) {
-			if (lines[i].contains("Allow")) {
-				allowed.add("http://" + urlObj.getHost() + lines[i].split(":")[1].trim());
-			} 
-			if(lines[i].contains("Disallow")) {
-				disallowed.add(lines[i]);
+			if(lines[i].contains("User-agent")) {
+				userAgent = lines[i].split(":")[1].trim();
+			}
+			if(userAgent.equals("*")) {
+				if(lines[i].contains("Disallow")) {
+					disallowed.add("http://" + urlObj.getHost() + lines[i].split(":")[1].trim());	
+				}
 			}
 		}
-		System.out.println("Total size of allowed robots.txt for " + baseUrl + ": " + allowed.size());
-		return allowed;
+		return disallowed;
 	}
 	
     public  synchronized void getHtmlUrls(Vector<String> urls, final DataStorage store, final int level) {
@@ -111,18 +129,19 @@ public class Parser {
                 public Vector<String> call() throws Exception {
                 	Vector<String> urlVector = null;
                 	String html;
-                	Vector<String> visitableLinks = checkForRobots(s);
-                	if(visitableLinks != null) {
-                		urlVector = visitableLinks;
-                		html = grabHtml(s);
-                	} else {
                 		html = grabHtml(s);
                 		if(html == null) {
                 			return null;
                 		}
                 		urlVector = getHtmlUrls(html);
-                	}
-                    htmlList.add(getHtmlBody(html));
+                		
+                		Vector<String> disallowed = new Vector<>();
+                		
+                		if(!alreadyVisted(s)) {
+                			disallowed = checkForRobots(s);
+                			urlVector.remove(disallowed);
+                		}
+                		htmlList.add(getHtmlBody(html));
                     FileStorage fileStorage = new FileStorage();
                     fileStorage.createFile(level, html, s.replaceAll("[^a-zA-Z0-9]", "") + ".html");	
                     return urlVector;
@@ -130,13 +149,12 @@ public class Parser {
             });
             futures.add(threadHtml);
         }
-
         try {
             for(Future<Vector<String>> f: futures) {
                 urlList.addAll(f.get());
             }
         } catch(Exception e) {
-        	e.printStackTrace();
+        	System.out.println("Concurrency issues...");
         }
     }
 }

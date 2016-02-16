@@ -1,5 +1,3 @@
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
 import java.util.*;
 
 /**
@@ -8,7 +6,7 @@ import java.util.*;
 public class WebCrawler {
 
     private DataStorage store = new DataStorage();
-    public synchronized String crawl(int levels, String url) {
+    public synchronized String crawl(int levels, String url, Vector<String> keywords) {
     	
     	System.out.println(url);
         String html = Parser.grabHtml(url);
@@ -17,9 +15,11 @@ public class WebCrawler {
         Vector<String> urlList = new Vector<String>();
     	try {
 			urlList= Parser.checkForRobots(url);
-			
 			if(urlList.size() > 0) {
-				store.addToUrlStoreWithLevels(urlList);
+				Vector<String> allUrls = Parser.getHtmlUrls(html);
+				allUrls.removeAll(urlList);
+				System.out.println("Size of allUrls: " + allUrls.size());
+				store.addToUrlStoreWithLevels(allUrls);
 			} else {
 				urlList = Parser.getHtmlUrls(html);
 				store.addToUrlStoreWithLevels(urlList);

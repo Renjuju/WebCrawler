@@ -1,3 +1,4 @@
+import java.util.Vector;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -10,18 +11,8 @@ public class CrawlRunner {
     	Input userInput = new Input();
     	String url = userInput.getUserUrl();
         int levels = userInput.getUserLevelChoices();
-        threadedCrawler.crawlInstance(url, levels);
-
-//        WebCrawler webCrawler = new WebCrawler();
-//        long startTime = System.currentTimeMillis();
-//        
-//        System.out.println("Crawling...spiderman can only shoot so many threads");
-//        String html = webCrawler.crawl(levels, "https://google.com"); 
-//        long endTime = System.currentTimeMillis() - startTime;
-//        double totalTime = (double)endTime/1000;
-//        
-//        System.out.println("Total time: " + totalTime + " seconds");
-//        System.out.println("Files saved in root of workspace starting with 0");
+        Vector<String> keywords = userInput.getKeyWords();
+        threadedCrawler.crawlInstance(url, levels, keywords);
         System.exit(-1);
     }
 }
