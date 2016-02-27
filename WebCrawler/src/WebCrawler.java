@@ -6,7 +6,7 @@ import java.util.*;
 public class WebCrawler {
 
     private DataStorage store = new DataStorage();
-    public synchronized String crawl(int levels, String url, Vector<String> keywords) {
+    public String crawl(int levels, String url, Vector<String> keywords) {
     	
     	System.out.println(url);
         String html = Parser.grabHtml(url);
@@ -14,7 +14,12 @@ public class WebCrawler {
         
         Vector<String> urlList = new Vector<String>();
     	try {
-			urlList= Parser.checkForRobots(url);
+    		try {
+    			urlList= Parser.checkForRobots(url);	
+    		} catch(Exception e) { 
+
+    		}
+    		
 			if(urlList.size() > 0) {
 				Vector<String> allUrls = Parser.getHtmlUrls(html);
 				allUrls.removeAll(urlList);
@@ -34,7 +39,7 @@ public class WebCrawler {
             store.addToUrlStoreWithLevels(urlList);
             store.addToHtmlStore(htmlParser.getHtmlList());
         }
-        store.printUrlListWithLevels();
+//        store.printUrlListWithLevels();
         System.out.println("Total number of sites visited: " + store.size() );
         return "";
     }

@@ -10,8 +10,21 @@ import java.util.concurrent.Future;
 public class CrawlWrapperWithThreads {
 	
 	Scanner reader = new Scanner(System.in);	
-
-	public synchronized void crawlInstance(final String url, final int levels, final Vector<String> keywords) {
+	private String url;
+	private int levels;
+	private Vector<String> keywords; 
+	
+	public CrawlWrapperWithThreads(String m_url, int m_levels, Vector<String> m_keywords) {
+		this.url = m_url;
+		this.levels = m_levels;
+		this.keywords = m_keywords;
+	}
+	
+	public void startCrawl() {
+		crawlInstance(url, levels, keywords);
+	}
+	
+	public void crawlInstance(final String url, final int levels, final Vector<String> keywords) {
 		ExecutorService es = Executors.newSingleThreadExecutor();
 		Future<Void> x = es.submit(new Callable<Void>() {
 
@@ -25,16 +38,15 @@ public class CrawlWrapperWithThreads {
 		try {
 			x.get();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		} catch (ExecutionException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 	
 	private void Crawler(String url, final int levels, Vector<String> keywords) {
 		WebCrawler webCrawler = new WebCrawler();
         long startTime = System.currentTimeMillis();
-        System.out.println("Crawling...spiderman can only shoot so many threads");
         String html = webCrawler.crawl(levels, "https://google.com", keywords); 
         long endTime = System.currentTimeMillis() - startTime;
         double totalTime = (double)endTime/1000;

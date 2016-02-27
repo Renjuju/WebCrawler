@@ -3,7 +3,7 @@ import java.util.Vector;
 /**
  * Created by Renju R on 1/9/2016.
  */
-public class DataStorage implements Storage{
+public class DataStorage {
 
     private Vector<String> urlStore = new Vector<>();
     private Vector<Vector<String>> urlStoreWithLevels= new Vector<>();

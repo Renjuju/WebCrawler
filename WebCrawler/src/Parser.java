@@ -70,9 +70,9 @@ public class Parser {
             htmlContent = scanner.next();
             scanner.close();
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return htmlContent;
     }
@@ -94,7 +94,7 @@ public class Parser {
 		return true;
     }
     
-	public static Vector<String> checkForRobots(String url) throws MalformedURLException, FileNotFoundException {
+	public static Vector<String> checkForRobots(String url) throws MalformedURLException, FileNotFoundException, ArrayIndexOutOfBoundsException {
 		URL urlObj = new URL(url);
 		String baseUrl = "http://" + urlObj.getHost() + "/robots.txt";
 		if(!visitedRobots.contains(baseUrl)) {
@@ -105,7 +105,7 @@ public class Parser {
 		String robotsTxt = getRobotTxt(baseUrl);
 		String[] lines = robotsTxt.split("\n");
 		Vector<String> disallowed = new Vector<String>();
-		String userAgent = null;
+		String userAgent = "";
 		for(int i = 0; i < lines.length; i++) {
 			if(lines[i].contains("User-agent")) {
 				userAgent = lines[i].split(":")[1].trim();

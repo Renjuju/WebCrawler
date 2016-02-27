@@ -6,7 +6,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Created by Renju R on 1/24/2016.
  */
-public class FileStorage implements Storage {
+public class FileStorage  {
 
 	public void createFile(int level, String html, String fileName) {
 		try {
