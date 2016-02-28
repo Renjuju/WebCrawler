@@ -8,6 +8,7 @@ public class DataStorage {
     private Vector<String> urlStore = new Vector<>();
     private Vector<Vector<String>> urlStoreWithLevels= new Vector<>();
     private Vector<Vector<String>> htmlLinks = new Vector<>();
+    private String baseUrl;
     
     public void addToUrlStore(String url) {
         urlStore.add(url);
@@ -77,4 +78,13 @@ public class DataStorage {
             System.out.println("End Level " + (i+1));
         }
     }
+    
+    public void setBaseUrl(String base) {
+    	baseUrl = base;
+    }
+    
+    public String getBaseUrl() {
+    	return this.baseUrl;
+    }
+    
 }

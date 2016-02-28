@@ -10,8 +10,8 @@ public class WebCrawler {
     	
     	System.out.println(url);
         String html = Parser.grabHtml(url);
-        Parser htmlParser = new Parser();
-        
+        Parser htmlParser = new Parser(keywords);
+        store.setBaseUrl(url);
         Vector<String> urlList = new Vector<String>();
     	try {
     		try {

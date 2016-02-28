@@ -22,6 +22,11 @@ public class Parser {
 	private Vector<String> urlList = new Vector<>();
 	private Vector<String> htmlList = new Vector<>();
 	private static Vector<String> visitedRobots = new Vector<>();
+	private Vector<String> keywords;
+	
+	public Parser(Vector<String> keywords) {
+		this.keywords = keywords;
+	}
 	
 	public Vector<String> getUrlList() {
 		 return urlList;
@@ -43,6 +48,18 @@ public class Parser {
 			System.out.println(e.getMessage());
 		}
 		return html;
+	}
+	
+	public static boolean hasKeyword(Vector<String> keywords, String html) {
+		if(keywords.size() == 0) {
+			return true;
+		}
+		for(String keyword : keywords) {
+			if(html.contains(keyword)) {
+				return true; 
+			}
+		}
+		return false;
 	}
 	
 	public static String getHtmlBody(String html) {
@@ -141,6 +158,9 @@ public class Parser {
                 	Vector<String> urlVector = null;
                 	String html;
                 		html = grabHtml(s);
+                		if(!hasKeyword(keywords, html)) {
+                			return null;
+                		}
                 		if(html == null) {
                 			return null;
                 		}
@@ -153,7 +173,7 @@ public class Parser {
                 			urlVector.remove(disallowed);
                 		}
                 		htmlList.add(getHtmlBody(html));
-                    FileStorage fileStorage = new FileStorage();
+                    FileStorage fileStorage = new FileStorage(store.getBaseUrl().replaceAll("[^a-zA-Z0-9]", ""));
                     fileStorage.createFile(level, html, s.replaceAll("[^a-zA-Z0-9]", "") + ".html");	
                     return urlVector;
                 }

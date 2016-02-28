@@ -66,4 +66,10 @@ public class Input {
 		}
 		return val;
 	}
+	
+	public String getBaseDirectoryName() {
+		System.out.println("What would your base directory name for the current job be?");
+		String baseDir = in.nextLine();
+		return baseDir;
+	}
 }
