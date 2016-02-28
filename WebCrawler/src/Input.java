@@ -46,4 +46,24 @@ public class Input {
     	}
     	return keywords;
     }
+	
+	public int commandCenterOptions() {
+		System.out.println("What up player, welcome to the webcrawler, choose an option below");
+		System.out.println("1) Start a job");
+		System.out.println("2) Pause the jobs");
+		System.out.println("3) List & Resume everything");
+		System.out.println("4) Quit");
+		int val = 0;
+		try {
+			val = Integer.parseInt(in.next());	
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			commandCenterOptions();
+		}
+		if(val < 1 || val > 4) {
+			System.out.println("You chose the wrong number!");
+			commandCenterOptions();
+		}
+		return val;
+	}
 }
