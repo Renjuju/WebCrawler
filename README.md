@@ -23,7 +23,7 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
 
 ## Features
 * Multithreaded
-* Interactive menu: **Start, pause, Resume, Quit**
+* Interactive menu: **Start, Pause, Resume, Quit**
 * Robots.txt support
 * User filter with user specified keywords support
 
