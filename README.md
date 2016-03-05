@@ -28,4 +28,4 @@ public class CrawlRunner {
 * User filter with user specified keywords support
 
 ## Cool gif
--![alt text](http://i.imgur.com/2VpuLV1.gif "This just looks really cool")
+![alt text](http://i.imgur.com/2VpuLV1.gif "This just looks really cool")
