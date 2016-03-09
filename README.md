@@ -27,5 +27,4 @@ public class CrawlRunner {
 * Robots.txt support
 * User filter with user specified keywords support
 
-## Cool gif
 ![alt text](http://i.imgur.com/2VpuLV1.gif "This just looks really cool")
