@@ -23,6 +23,7 @@ public class CrawlRunner {
 
 ## Features
 * Multithreaded
+* PageRank
 * Interactive menu: **Start, Pause, Resume, Quit**
 * Robots.txt support
 * User filter with user specified keywords support
