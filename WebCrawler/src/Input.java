@@ -31,22 +31,22 @@ public class Input {
 
 	public Vector<String> getKeyWords() {
 		Vector<String> keywords = new Vector<String>();
-    	System.out.println("How many keywords would you like to enter?" );
-    	Integer numberOfKeywords = 0;
-    	try {
-    		numberOfKeywords = Integer.parseInt(in.nextLine());
-    	} catch(Exception e) {
-    		System.out.println("Error: " + e.getMessage());
-    		getKeyWords();
-    	}
-    	
-    	for(int i = 0; i < numberOfKeywords; i++) {
-    		System.out.println("Enter keyword # " + i);
-    		keywords.add(in.nextLine());
-    	}
-    	return keywords;
-    }
-	
+		System.out.println("How many keywords would you like to enter?");
+		Integer numberOfKeywords = 0;
+		try {
+			numberOfKeywords = Integer.parseInt(in.nextLine());
+		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
+			getKeyWords();
+		}
+
+		for (int i = 0; i < numberOfKeywords; i++) {
+			System.out.println("Enter keyword # " + i);
+			keywords.add(in.nextLine());
+		}
+		return keywords;
+	}
+
 	public int commandCenterOptions() {
 		System.out.println("What up player, welcome to the webcrawler, choose an option below");
 		System.out.println("1) Start a job");
@@ -55,18 +55,18 @@ public class Input {
 		System.out.println("4) Quit");
 		int val = 0;
 		try {
-			val = Integer.parseInt(in.next());	
-		} catch(Exception e) {
+			val = Integer.parseInt(in.next());
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			commandCenterOptions();
 		}
-		if(val < 1 || val > 4) {
+		if (val < 1 || val > 4) {
 			System.out.println("You chose the wrong number!");
 			commandCenterOptions();
 		}
 		return val;
 	}
-	
+
 	public String getBaseDirectoryName() {
 		System.out.println("What would your base directory name for the current job be?");
 		String baseDir = in.nextLine();
