@@ -9,7 +9,7 @@ public class WebCrawler {
 	private Input input = new Input();
 	private Vector<WebPage> webPages = new Vector<WebPage>();
 
-	public String crawl(int levels, String url, Vector<String> keywords) {
+	public void crawl(int levels, String url, Vector<String> keywords) {
 
 		System.out.println(url);
 		String html = Parser.grabHtml(url);
@@ -46,6 +46,5 @@ public class WebCrawler {
 		pageRank.calculate();
 		Output.printWebPages(webPages);
 		Output.showOptions();
-		return "";
 	}
 }

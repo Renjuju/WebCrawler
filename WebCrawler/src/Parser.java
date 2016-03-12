@@ -45,8 +45,6 @@ public class Parser {
 			Document doc = Jsoup.connect(url).get();
 			html = Jsoup.parseBodyFragment(doc.html()).html();
 		} catch (IOException e) {
-			// System.out.println("Unable to access " + url);
-			// System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
@@ -190,7 +188,7 @@ public class Parser {
 				urlList.addAll(f.get());
 			}
 		} catch (Exception e) {
-			System.out.println("thread got lost");
+
 		}
 	}
 }
