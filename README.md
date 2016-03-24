@@ -1,4 +1,4 @@
-[![Code Climate](https://codeclimate.com/github/Renjuju/WebCrawler/badges/gpa.svg)](https://codeclimate.com/github/Renjuju/WebCrawler)
+[![Code Climate](https://codeclimate.com/github/Renjuju/WebCrawler/badges/gpa.svg)](https://codeclimate.com/github/Renjuju/WebCrawler) [![Build Status](https://travis-ci.org/Renjuju/WebCrawler.svg?branch=master)](https://travis-ci.org/Renjuju/WebCrawler)
 
 #Multithreaded WebCrawler
 An application for web-crawling at multiple user specified depths.
