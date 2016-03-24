@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/Renjuju/WebCrawler/badges/gpa.svg)](https://codeclimate.com/github/Renjuju/WebCrawler)
+
 #Multithreaded WebCrawler
 An application for web-crawling at multiple user specified depths.
 This application scrapes all web content starting from the base URL.
