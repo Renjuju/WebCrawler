@@ -1,0 +1,6 @@
+{
+  "name": "Webcrawler",
+  "tagline": "Multithreaded WebCrawler - runs as many instances as you'd like",
+  "body": "[![Code Climate](https://codeclimate.com/github/Renjuju/WebCrawler/badges/gpa.svg)](https://codeclimate.com/github/Renjuju/WebCrawler) [![Build Status](https://travis-ci.org/Renjuju/WebCrawler.svg?branch=master)](https://travis-ci.org/Renjuju/WebCrawler)\r\n\r\n#Multithreaded WebCrawler\r\nAn application for web-crawling at multiple user specified depths.\r\nThis application scrapes all web content starting from the base URL.\r\n\r\n## Install\r\nChoose your favorite IDE(Eclipse)\r\n* Import the project\r\n* Run CrawlRunner.java\r\n\r\n```java\r\nimport java.util.concurrent.ExecutionException;\r\n\r\n/**\r\n* Created by Renju R on 1/9/2016.\r\n*/\r\npublic class CrawlRunner {\r\n  public static void main(String[] args) throws ExecutionException, InterruptedException {\r\n    CommandCenter cm = new CommandCenter();\r\n    cm.start();    \t\r\n  }\r\n}\r\n```\r\n\r\n## Features\r\n* Multithreaded\r\n* PageRank\r\n* Interactive menu: **Start, Pause, Resume, Quit**\r\n* Robots.txt support\r\n* User filter with user specified keywords support\r\n\r\n![alt text](http://i.imgur.com/2VpuLV1.gif \"This just looks really cool\")",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
