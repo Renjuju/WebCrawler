@@ -29,5 +29,3 @@ public class CrawlRunner {
 * Interactive menu: **Start, Pause, Resume, Quit**
 * Robots.txt support
 * User filter with user specified keywords support
-
-![alt text](http://i.imgur.com/2VpuLV1.gif "This just looks really cool")
