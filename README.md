@@ -3,7 +3,7 @@ An application for web-crawling at multiple user specified depths.
 This application scrapes all web content starting from the base URL.
 Visit http://renjuju.github.io/WebCrawler
 ## Install
-Choose your favorite IDE(Eclipse)
+Choose your favorite IDE
 * Import the project
 * Run CrawlRunner.java
 
